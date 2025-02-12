@@ -1,26 +1,20 @@
-import { Notifier, Crypto } from '@klave/sdk';
-import { ErrorMessage, User, UserVerifiableAttribute } from './types';
-import { encode } from './hex-encoder';
+import { JSON } from '@klave/sdk';
+
+@json
+export class A {
+    propA: string = "";
+}
+
+@json
+export class B {
+    propB!: A;
+}
 
 /**
  * @query
  */
-export function createCode(): void {
+export function test(): void {
 
-    Notifier.sendJson<ErrorMessage>({ success: true, message: `✅ Enter function` });
-
-    let user = new User();
-
-    Notifier.sendJson<ErrorMessage>({ success: true, message: `✅ Create user` });
-
-    user.email = new UserVerifiableAttribute();
-    user.email.value = "whatever";
-
-    Notifier.sendJson<ErrorMessage>({ success: true, message: `✅ Set email` });
-
-    let rnd = Crypto.getRandomValues(8);
-    let hex = encode(rnd!);
-    let code = hex.substring(0, 8).toUpperCase();
-
-    Notifier.sendJson<ErrorMessage>({ success: true, message: `Code is ${code}` });
+    let obj = new B();
+    obj.propB.propA = "whatever"; // crash
 }
