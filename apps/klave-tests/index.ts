@@ -1,4 +1,4 @@
-import { JSON } from '@klave/sdk';
+import { Notifier, JSON } from '@klave/sdk';
 
 @json
 class A {
@@ -10,11 +10,19 @@ class B {
     propB: A = new A;
 }
 
+@json
+export class ErrorMessage {
+    success!: boolean;
+    message!: string;
+}
+
 /**
  * @query
  */
 export function test(): void {
 
     let obj = new B();
-    obj.propB.propA = "whatever"; // no crash 🎉
+    obj.propB.propA = "whatever";
+
+    Notifier.sendJson<ErrorMessage>({ success: true, message: `✅ Success!!` });
 }
