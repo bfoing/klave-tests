@@ -2,18 +2,17 @@ import { Notifier, JSON } from '@klave/sdk';
 
 @json
 class A {
-    propA: string = "";
+    value: string = "";
 }
 
 @json
 class B {
-    propB: A = new A;
+    instA: A = new A;
 }
 
 @json
-export class ErrorMessage {
-    success!: boolean;
-    message!: string;
+class C {
+    instA!: A;
 }
 
 /**
@@ -21,8 +20,14 @@ export class ErrorMessage {
  */
 export function test(): void {
 
-    let obj = new B();
-    obj.propB.propA = "whatever";
+    let objB = new B();
+    objB.instA.value = "whatever";
 
-    Notifier.sendJson<ErrorMessage>({ success: true, message: `✅ Success!!` });
+    Notifier.sendJson<B>(objB);
+
+    let objC = new C();
+    objC.instA = new A();
+    objC.instA.value = "whatever";
+
+    Notifier.sendJson<C>(objC);
 }
