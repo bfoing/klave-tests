@@ -25,9 +25,9 @@ export class PushNotificationUserConfiguration {
 
 @json
 export class User {
-    userId!: Uint8Array;
-    devicePublicKeyHash!: Uint8Array;
-    seedTOTP!: Uint8Array;
+    userId!: string;
+    devicePublicKeyHash!: string;
+    seedTOTP!: string;
     email!: UserVerifiableAttribute;
-    pushNotifCfg!: PushNotificationUserConfiguration;
+    pushNotifCfg!: string;
 }
