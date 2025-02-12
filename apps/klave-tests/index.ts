@@ -24,6 +24,7 @@ class C {
 @json
 class D {
     instA2!: A2;
+    blob!: Uint8Array;
 }
 
 /**
@@ -40,13 +41,15 @@ export function test(): void {
     objC.instA.value = "whatever C";
     Notifier.sendJson<C>(objC);
 
-    let objD = new D();
-    objD.instA2 = new A2();
-    objD.instA2.value = "whatever D";
     let arr = new Uint8Array(3);
     arr[0] = 1;
     arr[1] = 12;
     arr[2] = 123;
+
+    let objD = new D();
+    objD.blob = arr;
+    objD.instA2 = new A2();
+    objD.instA2.value = "whatever D";
     objD.instA2.blob = arr;
     Notifier.sendJson<D>(objD);
 }
