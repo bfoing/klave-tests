@@ -1,5 +1,5 @@
 import { Notifier, Crypto } from '@klave/sdk';
-import { ErrorMessage, User } from './types';
+import { ErrorMessage, User, UserVerifiableAttribute } from './types';
 import { encode } from './hex-encoder';
 
 /**
@@ -13,6 +13,7 @@ export function createCode(): void {
 
     Notifier.sendJson<ErrorMessage>({ success: true, message: `✅ Create user` });
 
+    user.email = new UserVerifiableAttribute();
     user.email.value = "whatever";
 
     Notifier.sendJson<ErrorMessage>({ success: true, message: `✅ Set email` });
