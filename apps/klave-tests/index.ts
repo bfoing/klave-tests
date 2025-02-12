@@ -48,5 +48,5 @@ export function test(): void {
     arr[1] = 12;
     arr[2] = 123;
     objD.instA2.blob = arr;
-    Notifier.sendJson<C>(objC);
+    Notifier.sendJson<D>(objD);
 }
