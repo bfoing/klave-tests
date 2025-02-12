@@ -1,13 +1,13 @@
 import { JSON } from '@klave/sdk';
 
 @json
-export class A {
+class A {
     propA: string = "";
 }
 
 @json
-export class B {
-    propB!: A;
+class B {
+    propB: A = new A;
 }
 
 /**
@@ -16,5 +16,5 @@ export class B {
 export function test(): void {
 
     let obj = new B();
-    obj.propB.propA = "whatever"; // crash
+    obj.propB.propA = "whatever"; // no crash 🎉
 }
