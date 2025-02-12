@@ -11,10 +11,10 @@ export class ErrorMessage {
 export class UserVerifiableAttribute {
     value: string = "";
     challenge: string = "";
-    attempts!: u64[];
+    //attempts!: u64[];
     verified: bool = false;
-    verifiers: string[] = [];
-    lastVerificationTime: u64 = 0;
+    //verifiers: string[] = [];
+    //lastVerificationTime: u64 = 0;
 }
 
 @json
