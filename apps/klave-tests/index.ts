@@ -6,12 +6,6 @@ class A {
 }
 
 @json
-class A2 {
-    value: string = "";
-    blob!: Uint8Array;
-}
-
-@json
 class B {
     instA: A = new A;
 }
@@ -23,7 +17,13 @@ class C {
 
 @json
 class D {
-    instA2!: A2;
+    value: string = "";
+    blob!: Uint8Array;
+}
+
+@json
+class E {
+    instD!: D;
     blob!: Uint8Array;
 }
 
@@ -45,11 +45,12 @@ export function test(): void {
     arr[0] = 1;
     arr[1] = 12;
     arr[2] = 123;
+    Notifier.sendJson<Uint8Array>(arr);
 
-    let objD = new D();
-    objD.blob = arr;
-    objD.instA2 = new A2();
-    objD.instA2.value = "whatever D";
-    objD.instA2.blob = arr;
-    Notifier.sendJson<D>(objD);
+    let objE = new E();
+    objE.blob = arr;
+    objE.instD = new D();
+    objE.instD.value = "whatever D";
+    objE.instD.blob = arr;
+    Notifier.sendJson<E>(objE);
 }
