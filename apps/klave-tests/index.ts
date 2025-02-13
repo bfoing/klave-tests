@@ -24,7 +24,7 @@ class D {
 @json
 class E {
     instD!: D;
-    blob: Uint8Array = new Uint8Array(0);;
+    blob: Uint8Array = new Uint8Array(0);
 }
 
 @json
