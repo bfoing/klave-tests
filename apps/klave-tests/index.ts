@@ -53,10 +53,12 @@ export function test(): void {
     objC.instA.value = "whatever C";
     Notifier.sendJson<C>(objC);
 
-    let arr = new Uint8Array(3);
+    let arr = new Uint8Array(4);
     arr[0] = 1;
     arr[1] = 12;
     arr[2] = 123;
+    arr[3] = 255;
+    Notifier.sendJson<String>("test");
     Notifier.sendJson<Uint8Array>(arr);
 
     let objE = new E();
