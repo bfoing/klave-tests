@@ -59,7 +59,8 @@ export function test(): void {
     arr[2] = 123;
     arr[3] = 255;
     Notifier.sendJson<String>("test");
-    Notifier.sendJson<Uint8Array>(arr);
+    let xxx = JSON.stringify(arr);
+    Notifier.sendJson<String>(xxx);
 
     let objE = new E();
     objE.blob = arr;
