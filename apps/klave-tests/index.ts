@@ -18,25 +18,33 @@ class C {
 @json
 class D {
     value: string = "";
-    blob: Uint8Array = new Uint8Array(0);
+    blob: u8[] = [];
 }
 
 @json
 class E {
     instD!: D;
-    blob: Uint8Array = new Uint8Array(0);
+    blob: u8[] = [];
 }
 
 @json
 class F {
     value: string = "";
-    blob!: Uint8Array;
+    blob: u8[] = [];
 }
 
 @json
 class G {
     instF!: F;
-    blob!: Uint8Array;
+    blob: u8[] = [];
+}
+
+export function toU8Array(data : Uint8Array) : u8[] {
+    let ret : u8[] = [];
+    for (let i = 0; i < data.length; i++) {
+        ret.push(data[i]);
+    }
+    return ret;
 }
 
 /**
@@ -53,26 +61,26 @@ export function test(): void {
     objC.instA.value = "whatever C";
     Notifier.sendJson<C>(objC);
 
-    let arr = new Uint8Array(4);
+    let arr = new Uint8Array(3);
     arr[0] = 1;
     arr[1] = 12;
     arr[2] = 123;
-    arr[3] = 255;
+
     Notifier.sendJson<String>("test");
     let xxx = JSON.stringify(arr);
     Notifier.sendJson<String>(xxx);
 
     let objE = new E();
-    objE.blob = arr;
+    objE.blob = toU8Array(arr);
     objE.instD = new D();
     objE.instD.value = "whatever E";
-    objE.instD.blob = arr;
+    objE.instD.blob = toU8Array(arr);
     Notifier.sendJson<E>(objE);
 
     let objG = new G();
-    objG.blob = arr;
+    objG.blob = toU8Array(arr);
     objG.instF = new F();
     objG.instF.value = "whatever G";
-    objG.instF.blob = arr;
+    objG.instF.blob = toU8Array(arr);
     Notifier.sendJson<G>(objG);
 }
