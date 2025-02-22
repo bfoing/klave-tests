@@ -1,21 +1,26 @@
-import { Notifier, JSON } from '@klave/sdk';
+import { Crypto, Notifier } from '@klave/sdk';
 
-@json
-class A {
-    value: string = "";
-}
-
-@json
-class B {
-    objA: A = new A;
-}
 
 /**
- * @query
- */
-export function test(): void {
+* @query
+*/
+export function subtleCryptoECDSA(): void
+{
+    // Generate EC key
+    let eccKeyResult = Crypto.Subtle.generateKey({namedCurve: "P-256"} as Crypto.EcKeyGenParams, true, ["sign", "verify"]);
+    if (!eccKeyResult.data)
+        return Notifier.sendString(`can't generate key: '${eccKeyResult.err!.message}'`);
 
-    let objB = new B();
-    objB.objA.value = "whatever";
-    Notifier.sendJson<B>(objB);
+    // Sign and Verify
+    let ecdsaParams = {hash: "SHA2-256"} as Crypto.EcdsaParams;
+    let data = String.UTF8.encode("Hello World");
+    let signEcc = Crypto.Subtle.sign(ecdsaParams, eccKeyResult.data!, data);
+    if (!signEcc.data)
+        return Notifier.sendString(`can't sign: '${signEcc.err!.message}'`);
+
+    let verifyEcc = Crypto.Subtle.verify(ecdsaParams, eccKeyResult.data!, data, signEcc.data!);
+    if (!verifyEcc.data)
+        return Notifier.sendString(`can't verify: '${verifyEcc.err!.message}'`);
+
+    return Notifier.sendString(`isValid: '${verifyEcc.data!.isValid}'`);
 }
